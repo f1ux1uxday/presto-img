@@ -13,6 +13,10 @@ app.get('/', (request, response) => {
   response.send('to search, go to localhost:8080/img/your-keywords-here')
 })
 
+app.get('/img/:keywords', (request, response) => {
+  response.send('this page is under construction.')
+})
+
 app.listen(process.env.PORT || 8080, () => {
   console.log('server is active.')
 })
