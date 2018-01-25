@@ -1,0 +1,15 @@
+{
+  "name": "presto-img",
+  "version": "1.0.0",
+  "description": "image search abstraction layer",
+  "main": "presto-img.js",
+  "repository": "https://github.com/f1ux1uxday/presto-img.git",
+  "author": "Lucas Dayton",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "mongoose": "^5.0.1",
+    "node-bing-api": "^3.2.2"
+  }
+}
