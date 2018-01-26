@@ -14,7 +14,15 @@ app.get('/', (request, response) => {
 })
 
 app.get('/img/:keywords', (request, response) => {
-  response.send('this page is under construction.')
+  let keywords = request.params.keywords
+  // request.query returns an object with query string as key
+  // ?key=value format
+  let query = request.query
+  response.json({
+    1: keywords,
+    2: query,
+    3: 'under construction',
+  })
 })
 
 app.listen(process.env.PORT || 8080, () => {
