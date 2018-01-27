@@ -5,7 +5,7 @@ const bing = require('node-bing-api')({
   accKey: '3c4fc651-9bec-4934-9b5d-58433c870811',
 })
 
-const keywords = require('./keywords')
+const Keywords = require('./keywords')
 
 const app = express()
 
@@ -19,12 +19,13 @@ app.get('/', (request, response) => {
 })
 
 app.get('/img/:keyword', (request, response) => {
-  let key_word = request.params.keyword
-  // request.query returns an object with query string as key
+  let keyword = request.params.keyword
+  // Request.query returns an object with query string as key
   // ?key=value format
   let query = request.query
-  let data = new keywords({
-    keywords: key_word,
+  // Constructor uses schema from keywords.js
+  let data = new Keywords({
+    keywords: keyword,
     date: new Date(),
   })
 
