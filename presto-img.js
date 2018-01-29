@@ -1,8 +1,8 @@
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
-const bing = require('node-bing-api')({
-  accKey: '3c4fc651-9bec-4934-9b5d-58433c870811',
+const Bing = require('node-bing-api')({
+  accKey: '35854bbf5d434bc6bba372151dc0ffa1',
 })
 
 const Keywords = require('./keywords')
@@ -18,6 +18,16 @@ app.get('/', (request, response) => {
   response.send('to search, go to localhost:8080/img/your-keywords-here')
 })
 
+app.get('/recent', (request, response) => {
+  Keywords.find({}, (error, data) => {
+    if (error) {
+      response.send('unable to return data :(')
+    } else {
+      response.json(data)
+    }
+  })
+})
+
 app.get('/img/:keyword', (request, response) => {
   let keyword = request.params.keyword
   // Request.query returns an object with query string as key
@@ -31,11 +41,20 @@ app.get('/img/:keyword', (request, response) => {
 
   data.save(error => {
     if (error) {
-      res.send('unable to save data to collection :(')
+      response.send('unable to save data to collection :(')
     }
   })
 
-  response.json(data)
+  Bing.images(keyword, {
+    count: 10,
+  }, (err, res, body) => {
+    if (err) {
+      console.log(err.message)
+    } else {
+      response.json(body)
+    }
+  })
+  // Response.json(data)
 })
 
 app.listen(process.env.PORT || 8080, () => {
