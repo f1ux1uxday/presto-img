@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
-const Bing = require('node-bing-api')({
+const Bing = require('bingsearch7-api')({
   accKey: '0821445330bc4608a05b8cfb5fe4b5cc',
 })
 
