@@ -18,6 +18,7 @@ app.get('/', (request, response) => {
   response.send('to search, go to localhost:8080/img/your-keywords-here')
 })
 
+// This route returns recent search keywords
 app.get('/recent', (request, response) => {
   Keywords.find({}, (error, data) => {
     if (error) {
@@ -28,6 +29,7 @@ app.get('/recent', (request, response) => {
   })
 })
 
+// This route runs search using given keyword
 app.get('/img/:keyword', (request, response) => {
   let keyword = request.params.keyword
   // Request.query returns an object with query string as key
