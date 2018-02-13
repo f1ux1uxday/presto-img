@@ -34,29 +34,42 @@ app.get('/img/:keyword', (request, response) => {
   let keyword = request.params.keyword
   // Request.query returns an object with query string as key
   // ?key=value format
-  let query = request.query
+  let offset = request.query.offset
   // Constructor uses schema from keywords.js
   let data = new Keywords({
     keywords: keyword,
     date: new Date(),
   })
 
+  // Save data to Mongo collection
   data.save(error => {
     if (error) {
       response.send('unable to save data to collection :(')
     }
   })
 
+  // Make call using bingsearch7 API
   Bing.images(keyword, {
     count: 10,
+    offset: offset,
   }, (err, res, body) => {
+    let resultsArray = []
+
+    for (let i = 0; i < 10; i++) {
+      resultsArray.push({
+        searchUrl: body.value[i].webSearchUrl,
+        caption: body.value[i].name,
+        thumbnailUrl: body.value[i].thumbnailUrl,
+        contentUrl: body.value[i].contentUrl,
+      })
+    }
+
     if (err) {
       console.log(err.message)
     } else {
-      response.json(body)
+      response.json(resultsArray)
     }
   })
-  // Response.json(data)
 })
 
 app.listen(process.env.PORT || 8080, () => {
