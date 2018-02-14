@@ -34,24 +34,27 @@ app.get('/img/:keyword', (request, response) => {
   let keyword = request.params.keyword
   // Request.query returns an object with query string as key
   // ?key=value format
-  let offset = request.query.offset
+  let pageNumber = request.query.page
   // Constructor uses schema from keywords.js
-  let data = new Keywords({
+  let searchItem = new Keywords({
     keywords: keyword,
     date: new Date(),
   })
 
   // Save data to Mongo collection
-  data.save(error => {
+  searchItem.save(error => {
     if (error) {
       response.send('unable to save data to collection :(')
     }
   })
-
+  // Ensure that pageNumber has numeric value
+  if (pageNumber == undefined) {
+    pageNumber = 0
+  }
   // Make call using bingsearch7 API
   Bing.images(keyword, {
     count: 10,
-    offset: offset,
+    offset: (pageNumber * 10),
   }, (err, res, body) => {
     let resultsArray = []
 
