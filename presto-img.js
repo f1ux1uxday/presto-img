@@ -11,7 +11,7 @@ const app = express()
 
 app.use(cors())
 mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://localhost/keywords'
+  process.env.MONGODB_URI || 'mongodb://flux:f1ux1uxday@ds225078.mlab.com:25078/heroku_qtwfr2vv'
 )
 
 app.get('/', (request, response) => {
